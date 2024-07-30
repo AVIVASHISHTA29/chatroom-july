@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import './App.css';
@@ -14,7 +15,7 @@ function App() {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const messages = [];
       querySnapshot.forEach((doc) => {
-        messages.push(doc.data());
+        messages.push({ id: doc.id, ...doc.data() });
       });
       setMessages(messages);
     });
@@ -65,12 +66,16 @@ function App() {
             <span>{username}</span>
           </div>
           <div className="messages">
-            {messages.map((message, index) => (
+            {messages.map((message) => (
               <div
-                key={index}
+                key={message.id}
                 className={`message ${message.sender === username ? 'sender' : 'receiver'}`}
               >
-                {message.text}
+                <div className="message-header">
+                  <span className="message-sender">{message.sender}</span>
+                  <span className="message-time">{format(new Date(message.timestamp.seconds * 1000), 'p, MMM dd')}</span>
+                </div>
+                <div className="message-text">{message.text}</div>
               </div>
             ))}
           </div>

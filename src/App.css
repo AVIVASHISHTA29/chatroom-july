@@ -100,6 +100,25 @@ body {
   align-self: flex-start;
 }
 
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.message-sender {
+  font-weight: bold;
+}
+
+.message-time {
+  font-size: 0.8em;
+  color: #bbb;
+}
+
+.message-text {
+  word-wrap: break-word;
+}
+
 .message-form {
   display: flex;
   padding: 10px;
