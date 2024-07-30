@@ -26,6 +26,11 @@ function App() {
   const handleUsernameSubmit = async (e) => {
     e.preventDefault();
     await addDoc(collection(db, 'users'), { name: username });
+    await addDoc(collection(db, 'messages'), {
+      text: `${username} has joined the chat!`,
+      sender: username,
+      timestamp: new Date(),
+    });
     setIsUsernameSet(true);
   };
 
